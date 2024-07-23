@@ -84,7 +84,7 @@ export default function Dashboardsongs({ code }) {
   return (
     <div className="d-flex flex-column py-2 text-white" style={{ height: "70vh" }}>
       
-      <input className=" text-xl relative ml-[28%] top-[-12%] mt-[-16px] h-10 w-[40%] rounded-lg border-none  bg-[#484848]"
+      <input className=" text-xl relative ml-[28%] top-[-12%] mt-[-16px] h-10 w-[40%] rounded-3xl border-none  bg-[#484848] pl-3"
         type="search"
         placeholder="Search Songs/Artists"
         value={search}
