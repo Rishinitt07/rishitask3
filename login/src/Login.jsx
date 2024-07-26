@@ -70,11 +70,11 @@ const Login = () => {
   const Home =(e)=>{
     e.preventDefault()
     if(!user){
-      // alert("enter your username")
+    
 
       show()
     } else if(!pass){
-      // alert("enter your password")
+      
       show1()
       
     }else{

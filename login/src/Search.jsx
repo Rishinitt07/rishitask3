@@ -61,8 +61,7 @@ const Search = () => {
             <button className='text-white p-2  bg-[#242424] rounded-2xl'><FaArrowLeft/></button>
             <button className='text-white p-2 ml-3  bg-[#242424] rounded-2xl'><FaArrowRight/></button>
             <h1 className='text-white font-semibold text-6xl pl-10 mt-2 '>Search</h1>
-            {/* <input className='flex absolute ml-[26%] top-16 w-[47%] h-[7%] rounded-3xl text-white bg-[#242424] border caret-white '/>
-            <IoMdSearch className='text-white absolute  ml-[69%] w-8 h-6 top-[72px] '/> */}
+        
             
 
             <button className='absolute text-white ml-[80%] top-16 bg-[#484848] w-32 h-9 rounded-2xl ' >Dark mode</button>
