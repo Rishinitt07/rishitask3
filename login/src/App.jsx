@@ -11,6 +11,7 @@ import Library from './Library'
 import Playlist from './Playlist'
 import Album1 from './Album1'
 import Toastify from './Toastify'
+import Friends from './Friends'
 
 
 
@@ -36,6 +37,7 @@ const App = () => {
         <Route path='playlist' element={<Playlist/>}/>
         <Route path='album1' element={<Album1/>}/>
         <Route path='toast' element={<Toastify/>}/>
+        <Route path='friends' element={<Friends/>}/>
         
 
       </Routes>
