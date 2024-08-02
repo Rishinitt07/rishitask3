@@ -15,11 +15,13 @@ const SpotifyWebApi = require("spotify-web-api-node");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const cookieParser = require('cookie-parser');
 const secretKey1 = crypto.randomBytes(64).toString('hex');
 
 
 
 const app = express();
+app.use(cookieParser());
 const secretKey = secretKey1;
 console.log(secretKey);
 
@@ -110,31 +112,63 @@ app.post("/login", async (req, res) => {
 
 
 
-const authenticateToken = (req, res, next) => {
-  const authHeader = `${token}`
-  console.log(authHeader)
-  if (!authHeader) {
-    return res.status(401).json({ message: 'No token provided' });
-  }
+// const authenticateToken = (req, res, next) => {
+//   const authHeader = `${token}`
+//   console.log(authHeader)
+//   if (!authHeader) {
+//     return res.status(401).json({ message: 'No token provided' });
+//   }
 
-  const token = authHeader.split(' ')[1]; // Extract the token part
-  if (!token) {
-    return res.status(401).json({ message: 'Malformed token' });
-  }
+//   const token = authHeader.split(' ')[1]; // Extract the token part
+//   if (!token) {
+//     return res.status(401).json({ message: 'Malformed token' });
+//   }
 
-  jwt.verify(token, secretKey, (err, decoded) => {
-    if (err) {
-      console.error('Token verification error:', err);
-      return res.status(403).json({ message: 'Failed to authenticate token' });
-    }
-    req.user = decoded.user;
-    next();
-  });
+//   jwt.verify(token, secretKey, (err, decoded) => {
+//     if (err) {
+//       console.error('Token verification error:', err);
+//       return res.status(403).json({ message: 'Failed to authenticate token' });
+//     }
+//     req.user = decoded.user;
+//     next();
+//   });
+// };
+
+
+
+
+
+const authenticateJWT = (req, res, next) => {
+  const token = req.cookies.token;
+  console.log(token)
+
+  if (token) {
+    jwt.verify(token, SECRET_KEY, (err, user) => {
+      if (err) {
+        return res.sendStatus(403);
+      }
+      req.user = user;
+      next();
+    });
+  } else {
+    res.sendStatus(401);
+  }
 };
 
 
-app.get('/protected', authenticateToken, (req, res) => {
+
+
+
+
+
+
+
+
+
+
+app.get('/protected', authenticateJWT, (req, res) => {
   res.json({ message: `Welcome ${req.user}` });
+
 });
 
 // app.post("/info", (req, res) => {
@@ -144,7 +178,7 @@ app.get('/protected', authenticateToken, (req, res) => {
 //     .catch((err) => res.json(err));
 // });
 
-app.post("/home", authenticateToken, (req, res) => {
+app.post("/home", authenticateJWT, (req, res) => {
   userModel
     .create(req.body)
     .then((home) => res.json(home))
@@ -246,7 +280,7 @@ app.get("/lyrics", async (req, res) => {
   res.json({ lyrics });
 });
 
-app.post("/friends", authenticateToken, (req, res) => {
+app.post("/friends", authenticateJWT, (req, res) => {
   const { user } = req.body;
   userModel.findOne({ user }).then((user) => {
     if (user) {
