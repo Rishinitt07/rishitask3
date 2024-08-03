@@ -12,6 +12,7 @@ import TrackSearchResult from "./TrackSearchResult"
 import SpotifyWebApi from "spotify-web-api-node"
 import { Bounce, Flip, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -20,6 +21,54 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const Home = () => {
+
+
+
+
+  // const result =  axios.post('http://localhost:3001/login',{user,pass} );
+  // if (result.data.token) {
+
+
+    
+  //   //  var a = localStorage.setItem('token', result.data.token);
+    
+  //   var b = localStorage.getItem('token')
+  //   if(!a===b){
+  //     console.log("wrong authentication")
+  //     navigate('/login')
+     
+      
+  //   }else{
+  //     console.log("verified")
+  //     navigate('/home');
+  //     // localStorage.removeItem('token')
+  //   }
+
+    
+  // } else {
+   
+  //   console.log(result.data.token)
+  // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -43,6 +92,25 @@ const Home = () => {
 
 
   window.addEventListener("load",show2)
+  axios.defaults.withCredentials=true
+
+  const [message,setmessage]= useState()
+  const navigate = useNavigate()
+
+
+  useEffect(()=>{
+    axios.get('http://localhost:3001/dashboard')
+    .then(res=>{
+      if(res.data.valid){
+        setmessage(res.data.message)
+      }
+      else{
+        navigate('/login')
+
+      }
+    })
+    .catch(err=>console.log(err))
+  })
   
 
 

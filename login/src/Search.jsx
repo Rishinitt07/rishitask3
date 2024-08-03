@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from './Sidebar'
 import Display from './Display'
 import Player1 from './Player1'
@@ -8,6 +8,8 @@ import { IoMdSearch } from "react-icons/io";
 import Appsong from './Appsong';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 
@@ -18,6 +20,33 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const Search = () => {
+  axios.defaults.withCredentials=true
+
+  const [message,setmessage]= useState()
+  const navigate = useNavigate()
+
+
+  useEffect(()=>{
+    axios.get('http://localhost:3001/dashboard')
+    .then(res=>{
+      if(res.data.valid){
+        setmessage(res.data.message)
+      }
+      else{
+        navigate('/login')
+
+      }
+    })
+    .catch(err=>console.log(err))
+  })
+
+
+
+
+
+
+
+
 
 
 

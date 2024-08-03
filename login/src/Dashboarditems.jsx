@@ -2,17 +2,21 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 // import ScratchCard from 'react-scratchcard'
 import { TypeAnimation } from 'react-type-animation';
+import { redirect } from 'react-router-dom';
 
 
 
 const Dashboard = () => {
-  const settings = {
-    width: 350,
-    height: 350,
-    image: '../src/assets/bg-1.jpg' ,
-    finishPercent: 50,
-    onComplete: () => console.log('The card is now clear!')
-  };
+  // const settings = {
+  //   width: 350,
+  //   height: 350,
+  //   image: '../src/assets/bg-1.jpg' ,
+  //   finishPercent: 50,
+  //   onComplete: () => console.log('The card is now clear!')
+  // };
+
+
+
 
 
 
