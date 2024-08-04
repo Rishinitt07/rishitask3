@@ -6,11 +6,16 @@ import { FaArrowRight } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { MdPersonSearch } from "react-icons/md";
+import axios from 'axios';
 
 const Sidebar = () => {
 
   const alert =()=>{
     alert("refresh if the plyer controls are not visible")
+  }
+
+  const clear =()=>{
+    axios.post('http://localhost:3001/delete-cookie')
   }
 
 
@@ -59,6 +64,8 @@ const Sidebar = () => {
             <MdPersonSearch className='h-10 w-6'/>
             <p className='font-semibold text-xl '><Link to="/friends">Friends </Link></p>
             </div>
+
+            <Link to="/login"><button onClick={clear}>Logout</button></Link>
             
           
           {/* <div className='h-36 w-[95%] bg-[#242424] rounded-2xl ml-2 flex flex-col items-start pl-8  justify-start pt-7 font-semibold '>
