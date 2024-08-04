@@ -76,10 +76,10 @@ app.post("/login", async (req, res) => {
   const { user, pass } = req.body;
   const existingUser = await userModel.findOne({ user });
   if (existingUser && await bcrypt.compare(pass, existingUser.pass)) {
-    const token = jwt.sign({ user }, secretKey, { expiresIn: '1m' });
-    const reftoken = jwt.sign({ user }, secretKey3, { expiresIn: '2m' });
-    res.cookie("accesstoken",token,{maxAge:60000})
-    res.cookie("refreshtoken",reftoken,{maxAge:120000,httpOnly:true,secure:true,sameSite:"strict"})
+    const token = jwt.sign({ user }, secretKey, { expiresIn: '30m' });
+    const reftoken = jwt.sign({ user }, secretKey3, { expiresIn: '1h' });
+    res.cookie("accesstoken",token,{maxAge:180000})
+    res.cookie("refreshtoken",reftoken,{maxAge:3600000,httpOnly:true,secure:true,sameSite:"strict"})
 
     // const Login = require('../login/src/Login.js');
 
@@ -326,13 +326,21 @@ app.get("/lyrics", async (req, res) => {
 
 app.post("/friends",  (req, res) => {
   const { user } = req.body;
-  friendsModel.findOne({ user }).then((user) => {
+  friendsModel.findOne({ user:user }).then((user) => {
     if (user) {
       res.json("Success");
     } else {
       res.json("No record found");
     }
   });
+});
+
+
+
+app.post("/delete-cookie", (req, res) => {
+  res.clearCookie('refreshtoken');
+  res.clearCookie('accesstoken');
+  res.json("Cookie deleted");
 });
 
 app.listen(3001, () => {
